@@ -14,17 +14,16 @@ import matplotlib.pyplot as plt
 # Allow relative imports when being executed as script.
 if __name__ == "__main__" and __package__ is None:
     sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', '..'))
-    import enet_sad_naiveresize.bin  # noqa: F401
-    __package__ = "enet_sad_naiveresize.bin"
+    import enet_sad.bin  # noqa: F401
+    __package__ = "enet_sad.bin"
 
 from ..models.encoder import encoder_build
 from ..models.decoder import decoder_build
 
-#imgPath = "/workspace/work/LADYBUG_DATASET/inputs/21022020/im_1567006779_310.png"
-imgPath = imgPath.replace("\\","/")
+imPath = "/workspace/work/enet_sad/16_enet.jpg"
 
-model = tf.keras.models.load_model("/workspace/work/enet_sad_naiveresize/snapshot/enetNRSAD_Tusimple_L_0.0801_VL_0.0856.h5")
-#model.summary()
+model = tf.keras.models.load_model("/workspace/work/enet_sad/snapshot/enetNRSAD_Tusimple_L_0.0801_VL_0.0856.h5")
+model.summary()
 
 img = np.asarray(Image.open(imgPath).convert('RGB'))
 img1 = img.copy()
@@ -41,5 +40,5 @@ out = np.array(out,dtype=np.uint8)
 
 img2 = cv2.addWeighted(img1, 1, out, 1, 0) 
 
-plt.imsave("/workspace/work/enet_sad_naiveresize/predicitions/16_enet.jpg",img2)
-plt.imsave("/workspace/work/enet_sad_naiveresize/predicitions/16_mask_enet.jpg",out)
+plt.imsave("/workspace/work/enet_sad/predicitions/16_enet.jpg",img2)
+plt.imsave("/workspace/work/enet_sad/predicitions/16_mask_enet.jpg",out)
