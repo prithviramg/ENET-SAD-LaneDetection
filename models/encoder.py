@@ -5,12 +5,13 @@ Created on Fri Apr  3 13:51:39 2020
 @author: prith
 """
 import tensorflow as tf
+from ..preprocessing.dataloader import Generator
 
 def initial_block(inputs, filters=13, kernel=(3,3), strides=(2, 2)):
     conv = tf.keras.layers.Conv2D(filters, kernel, padding='same', strides=strides)(inputs)
     max_pool = tf.keras.layers.MaxPooling2D()(inputs)
     merged = tf.keras.layers.concatenate([conv, max_pool], axis=3)
-    return merged
+    return merged # total 16 layers
 
 def bottleneck(inputs, outputs, internal_scale=4, asymmetric=0, dilated=0, downsample=False, dropout_rate=0.1):
     # main branch
