@@ -10,8 +10,8 @@ import tensorflow as tf
 # Allow relative imports when being executed as script.
 if __name__ == "__main__" and __package__ is None:
     sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', '..'))
-    import enet_sad_naiveresize.bin  # noqa: F401
-    __package__ = "enet_sad_naiveresize.bin"
+    import enet_sad.bin  # noqa: F401
+    __package__ = "enet_sad.bin"
     
 from ..models.encoder import encoder_build
 from ..models.decoder import decoder_build
@@ -24,8 +24,8 @@ trainDataPath = "/workspace/work/Tusimple_dataset/train_set/train.txt"
 valDataPath = "/workspace/work/Tusimple_dataset/train_set/val.txt"
 batchSize = 8
 epochs = 50
-snapshotPath = "/workspace/work/enet_sad_naiveresize/snapshot"
-tensorboardPath = "/workspace/work/enet_sad_naiveresize/tensorboard"
+snapshotPath = "/workspace/work/enet_sad/snapshot"
+tensorboardPath = "/workspace/work/enet_sad/tensorboard"
 
 ########################## Data Input ###############################
 
@@ -35,7 +35,7 @@ encoderTuple = encoder_build(inputs)  #https://miro.medium.com/max/1044/1*CKuZqy
 attention_inputs = encoderTuple[1]
 outputs = decoder_build(encoderTuple[0]) #https://miro.medium.com/max/1044/1*CKuZqyLSc4U8BjG3sWZHew.png
 model = tf.keras.models.Model(inputs=inputs, outputs=outputs)
-model.load_weights("/workspace/work/enet_sad_naiveresize/snapshot/enetNT_Tusimple_20200424.h5", by_name=True)
+model.load_weights("/workspace/work/enet_sad/snapshot/enetNT_Tusimple_20200424.h5", by_name=True)
 model.add_loss(compute_distillation(attention_inputs)) # https://arxiv.org/pdf/1908.00821.pdf - section 3.1. Self Attention Distillation
 
 train_generator = Generator(trainDataPath,batchSize)
